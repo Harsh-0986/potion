@@ -6,8 +6,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" index element={<Home />} />
-        <Route path="/new" element={<Editor />} />
-        <Route path="/edit/:id" element={<Editor />} />
+        <Route path="new" element={<Editor />} />
+        <Route path="edit/:id" element={<Editor />} />
       </Routes>
     </div>
   );
