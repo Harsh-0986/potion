@@ -16,6 +16,7 @@
     "@tiptap/react": "^2.3.0",
     "@tiptap/starter-kit": "^2.3.0",
     "@types/uuid": "^9.0.8",
+    "inspirational-quotes": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
