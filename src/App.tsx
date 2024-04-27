@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import { Editor, Home } from "./pages";
+import { Header } from "./components";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App h-screen bg-zinc-100">
+      <Header />
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/new" element={<Editor />} />

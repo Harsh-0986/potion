@@ -49,7 +49,7 @@ const MDEditor = () => {
 
   return (
     <div className="max-h-screen overflow-y-auto">
-      <div className="bg-zinc-200 p-2 min-h-screen">
+      <div className="bg-zinc-100 p-2 min-h-screen">
         <EditorContent editor={editor} />
       </div>
     </div>
