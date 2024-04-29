@@ -13,7 +13,12 @@ export const useLocalStorage = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
+    const changedNotes = notes;
+    changedNotes?.sort((a, b) => {
+      return parseInt(b.date) - parseInt(a.date);
+    });
+    console.log(changedNotes);
+    localStorage.setItem("notes", JSON.stringify(changedNotes));
   }, [notes]);
 
   return { notes, setNotes };

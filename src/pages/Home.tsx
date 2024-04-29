@@ -25,7 +25,7 @@ const Home = () => {
 
       if (!prev) return [newNote];
 
-      return prev.concat(newNote);
+      return [newNote].concat(prev);
     });
   };
 
@@ -51,9 +51,12 @@ const Home = () => {
                   state={{ note: note }}
                   to={`edit/${note.id}`}
                 >
-                  <div className="h-full gap-3 px-4 py-6 border-2 ease-in-out transition-all hover:border-zinc-900 hover:bg-zinc-300 text-center cursor-pointer rounded-md w-full flex flex-col items-center justify-center">
+                  <div className="h-full gap-3 px-4 py-6 border-2 ease-in-out transition-all hover:border-zinc-900 hover:bg-zinc-300 text-center cursor-pointer rounded-md w-full flex flex-col max-h-[20vh]">
                     <h4 className="font-semibold text-xl">{note.title}</h4>
-                    <span>{note.content}</span>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: note.content }}
+                      className="text-wrap overflow-hidden"
+                    />
                   </div>
                 </Link>
               );
