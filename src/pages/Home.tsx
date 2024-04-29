@@ -4,6 +4,7 @@ import { NoteType } from "../types";
 import quotes from "inspirational-quotes";
 import { Header } from "../components";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const Home = () => {
   const { notes, setNotes } = useLocalStorage();
@@ -12,8 +13,6 @@ const Home = () => {
     const id = uuidV4();
     const quote = quotes.getQuote();
     const content = `${quote.text} - ${quote.author}`;
-
-    console.log(content);
 
     setNotes((prev: NoteType[] | null) => {
       const newNote = {
@@ -41,7 +40,7 @@ const Home = () => {
             <span className="font-semibold"> + Add a Note</span>
           </button>
         </div>
-        <section className="my-4 w-full max-h-[85%] justify-center items-center grid grid-cols-3 grid-flow-row gap-3 overflow-hidden">
+        <section className="my-4 w-full max-h-[85%] justify-center items-center grid grid-cols-3 lg:grid-cols-5 grid-flow-row gap-3 overflow-hidden">
           {notes &&
             notes.map((note) => {
               return (
@@ -51,12 +50,18 @@ const Home = () => {
                   state={{ note: note }}
                   to={`edit/${note.id}`}
                 >
-                  <div className="h-full gap-3 px-4 py-6 border-2 ease-in-out transition-all hover:border-zinc-900 hover:bg-zinc-300 text-center cursor-pointer rounded-md w-full flex flex-col max-h-[20vh]">
+                  <div className="h-full gap-3 px-4 py-6 border-2 ease-in-out transition-all hover:border-zinc-900 hover:bg-zinc-300 text-center cursor-pointer rounded-md w-full flex flex-col max-h-[28vh]">
                     <h4 className="font-semibold text-xl">{note.title}</h4>
                     <span
                       dangerouslySetInnerHTML={{ __html: note.content }}
                       className="text-wrap overflow-hidden"
                     />
+                    <span className="z-10 text-zinc-800/50">
+                      Last Edited:{" "}
+                      {moment(
+                        moment.unix(parseInt(note.date) / 1000)
+                      ).fromNow()}
+                    </span>
                   </div>
                 </Link>
               );

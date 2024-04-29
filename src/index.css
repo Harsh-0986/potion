@@ -2,5 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Editor Styles */
-/* Basic editor styles */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-zinc-300;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-900;
+}
