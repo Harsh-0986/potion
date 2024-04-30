@@ -2,7 +2,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import { NoteType } from "../types";
 import quotes from "inspirational-quotes";
-import { Header } from "../components";
+import { DeleteButton, Header } from "../components";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
@@ -28,6 +28,15 @@ const Home = () => {
     });
   };
 
+  const handleDelete = (noteId: string) => {
+    setNotes((prev) => {
+      if (prev === null) return null;
+      const notes = prev.filter((note) => note.id != noteId);
+
+      return notes;
+    });
+  };
+
   return (
     <div className="max-h-screen overflow-y-scroll">
       <Header />
@@ -44,26 +53,37 @@ const Home = () => {
           {notes &&
             notes.map((note) => {
               return (
-                <Link
-                  key={note.id}
-                  className="h-full"
-                  state={{ note: note }}
-                  to={`edit/${note.id}`}
-                >
-                  <div className="h-full gap-3 px-4 py-6 border-2 ease-in-out transition-all hover:border-zinc-900 hover:bg-zinc-300 text-center cursor-pointer rounded-md w-full flex flex-col max-h-[28vh]">
-                    <h4 className="font-semibold text-xl">{note.title}</h4>
-                    <span
-                      dangerouslySetInnerHTML={{ __html: note.content }}
-                      className="text-wrap overflow-hidden"
-                    />
-                    <span className="z-10 text-zinc-800/50">
-                      Last Edited:{" "}
-                      {moment(
-                        moment.unix(parseInt(note.date) / 1000)
-                      ).fromNow()}
-                    </span>
+                <div key={note.id} className="relative h-full">
+                  <div className="absolute left-0 bottom-0 right-0 rounded-md my-1 mx-0.5 py-1 px-2 bg-zinc-100 z-50">
+                    <div className="w-full flex items-center justify-between">
+                      <div className="z-50 text-zinc-800/50 truncate bg-zinc-100">
+                        Last Edited:{" "}
+                        {moment(
+                          moment.unix(parseInt(note.date) / 1000)
+                        ).fromNow()}
+                      </div>
+                      <DeleteButton
+                        handleDelete={handleDelete}
+                        noteId={note.id}
+                        className="transition-all duration-300 bg-red-100 text-red-500 hover:bg-red-400 hover:text-red-100 font-semibold"
+                      />
+                    </div>
                   </div>
-                </Link>
+                  <Link
+                    key={note.id}
+                    className="h-full"
+                    state={{ note: note }}
+                    to={`edit/${note.id}`}
+                  >
+                    <div className="duration-300 h-full pb-6 hover:border-zinc-900 hover:bg-zinc-300 gap-3 px-4 py-6 border-2 ease-in-out transition-all text-center cursor-pointer rounded-md w-full flex flex-col max-h-[28vh]">
+                      <h4 className="font-semibold text-2xl">{note.title}</h4>
+                      <span
+                        dangerouslySetInnerHTML={{ __html: note.content }}
+                        className="text-wrap overflow-hidden"
+                      />
+                    </div>
+                  </Link>
+                </div>
               );
             })}
         </section>
