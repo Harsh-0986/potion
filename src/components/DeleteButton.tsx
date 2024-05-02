@@ -10,7 +10,7 @@ const DeleteButton = ({
   return (
     <div
       onClick={() => handleDelete(noteId)}
-      className={`cursor-pointer p-2 border-2 z-50 rounded-md ${className}`}
+      className={`cursor-pointer hover:scale-110 transition-all p-2 border-2 z-50 rounded-md ${className}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

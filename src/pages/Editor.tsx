@@ -14,7 +14,7 @@ const Editor = () => {
   console.log(state.note);
   return (
     <div>
-      <MDEditor note={state.note} />
+      <MDEditor noteId={state.note.id} />
     </div>
   );
 };

@@ -17,3 +17,11 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-zinc-900;
 }
+
+pre,
+code {
+  font-family: Consolas, Monaco, monospace;
+  justify-content: start;
+  text-align: start;
+  font-size: 14px !important;
+}

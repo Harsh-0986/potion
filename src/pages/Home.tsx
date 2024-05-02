@@ -49,12 +49,12 @@ const Home = () => {
             <span className="font-semibold"> + Add a Note</span>
           </button>
         </div>
-        <section className="my-4 w-full max-h-[85%] justify-center items-center grid grid-cols-3 lg:grid-cols-5 grid-flow-row gap-3 overflow-hidden">
+        <section className="my-4 w-full max-h-[85%] justify-center items-center grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 grid-flow-row gap-3 overflow-hidden">
           {notes &&
             notes.map((note) => {
               return (
                 <div key={note.id} className="relative h-full">
-                  <div className="absolute left-0 bottom-0 right-0 rounded-md my-1 mx-0.5 py-1 px-2 bg-zinc-100 z-50">
+                  <div className="absolute left-0 bottom-0 right-0 rounded-md mt-1 mb-0.5 mx-0.5 py-1 px-2 bg-zinc-100 z-50">
                     <div className="w-full flex items-center justify-between">
                       <div className="z-50 text-zinc-800/50 truncate bg-zinc-100">
                         Last Edited:{" "}
@@ -75,11 +75,11 @@ const Home = () => {
                     state={{ note: note }}
                     to={`edit/${note.id}`}
                   >
-                    <div className="duration-300 h-full pb-6 hover:border-zinc-900 hover:bg-zinc-300 gap-3 px-4 py-6 border-2 ease-in-out transition-all text-center cursor-pointer rounded-md w-full flex flex-col max-h-[28vh]">
+                    <div className="overflow-hidden duration-300 h-full pb-6 hover:border-zinc-900 hover:bg-zinc-300 gap-3 px-4 py-6 border-2 ease-in-out transition-all text-center cursor-pointer rounded-md w-full flex flex-col max-h-[28vh]">
                       <h4 className="font-semibold text-2xl">{note.title}</h4>
                       <span
                         dangerouslySetInnerHTML={{ __html: note.content }}
-                        className="text-wrap overflow-hidden"
+                        className="pb-72 text-wrap overflow-hidden"
                       />
                     </div>
                   </Link>

@@ -2,42 +2,53 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
-import { NoteType } from "../types";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import "katex/dist/katex.min.css";
+import Mathematics from "@tiptap-pro/extension-mathematics";
 
-const MDEditor = ({ note }: { note: NoteType }) => {
-  const [title, setTitle] = useState(note.title);
+const MDEditor = ({ noteId }: { noteId: string }) => {
+  const { notes, setNotes } = useLocalStorage();
+
+  const note = notes?.filter((note) => note.id === noteId)[0];
+
+  const [title, setTitle] = useState(note?.title || "");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    updateNotes(note.content);
+    updateNotes(note?.content || "");
   }, [title]);
 
   const updateNotes = (content: string) => {
     setSaving(false);
     setNotes((prev) => {
-      const notes = prev?.filter((curr) => curr.id !== note.id) || [];
-      notes.push({
-        ...note,
+      const filteredNotes = prev?.filter((curr) => curr.id !== noteId) || [];
+      filteredNotes.push({
+        id: noteId,
         content: content,
         date: new Date().getTime().toString(),
         title: title,
       });
-      return notes;
+      return filteredNotes;
     });
   };
 
-  const { setNotes } = useLocalStorage();
-  const extensions = [StarterKit, Highlight, Typography];
+  const extensions = [StarterKit, Highlight, Typography, Mathematics];
+
+  Mathematics.configure({
+    shouldRender: (state, pos, node) => {
+      const $pos = state.doc.resolve(pos);
+      return node.type.name === "text" && $pos.parent.type.name !== "codeBlock";
+    },
+  });
 
   const updateContent = useDebouncedCallback((content) => {
     updateNotes(content);
   }, 5000);
 
   const editor = useEditor({
-    content: `${note.content}`,
+    content: `${note?.content}` || "",
     extensions: extensions,
     editorProps: {
       attributes: {

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap-pro/extension-mathematics": "^2.8.1",
+    "@tiptap-pro/extension-unique-id": "^2.8.1",
     "@tiptap/extension-highlight": "^2.3.0",
     "@tiptap/extension-typography": "^2.3.0",
     "@tiptap/pm": "^2.3.0",
@@ -17,6 +19,7 @@
     "@tiptap/starter-kit": "^2.3.0",
     "@types/uuid": "^9.0.8",
     "inspirational-quotes": "^2.0.1",
+    "katex": "^0.16.10",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
