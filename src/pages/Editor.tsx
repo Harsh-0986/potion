@@ -13,7 +13,7 @@ const Editor = () => {
 
   console.log(state.note);
   return (
-    <div>
+    <div className="bg-white">
       <MDEditor noteId={state.note.id} />
     </div>
   );

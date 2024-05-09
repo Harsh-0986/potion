@@ -25,3 +25,16 @@ code {
   text-align: start;
   font-size: 14px !important;
 }
+
+.tiptap blockquote {
+  border-left: 3px solid rgba(#0d0d0d, 0.1);
+  padding-left: 1rem;
+}
+
+.tiptap {
+  text-align: start !important;
+}
+
+.link-styles {
+  @apply hover:underline px-2 py-1 rounded-md cursor-pointer text-zinc-800 hover:bg-zinc-900 hover:text-white transition-all hover:scale-105;
+}
