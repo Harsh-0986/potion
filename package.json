@@ -29,6 +29,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
+    "tiptap-markdown": "^0.8.10",
     "use-debounce": "^10.0.0",
     "uuid": "^9.0.1"
   },

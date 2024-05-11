@@ -10,6 +10,7 @@ import Mathematics from "@tiptap-pro/extension-mathematics";
 import html2pdf from "html2pdf.js";
 import Blockquote from "@tiptap/extension-blockquote";
 import Link from "@tiptap/extension-link";
+import { Markdown } from "tiptap-markdown";
 
 const MDEditor = ({ noteId }: { noteId: string }) => {
   const { notes, setNotes } = useLocalStorage();
@@ -39,6 +40,7 @@ const MDEditor = ({ noteId }: { noteId: string }) => {
 
   const extensions = [
     StarterKit,
+    Markdown,
     Highlight,
     Typography,
     Mathematics,
@@ -83,11 +85,34 @@ const MDEditor = ({ noteId }: { noteId: string }) => {
     },
   });
 
-  const handleDownload = () => {
+  const handlePDFDownload = () => {
     const worker = html2pdf();
     worker
       .from(document.getElementById("editorComponent"))
       .save(`${title}.pdf`);
+  };
+
+  const handleMarkdownDownload = () => {
+    const mdFile: any = new Blob([editor?.storage.markdown.getMarkdown()], {
+      type: "text/markdown",
+    });
+
+    //mdFile.lastModified = new Date();
+    //mdFile.name = title;
+
+    const blobUrl = URL.createObjectURL(mdFile);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = `${title}.md`;
+
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+
+    return mdFile as File;
   };
 
   if (!editor)
@@ -99,26 +124,49 @@ const MDEditor = ({ noteId }: { noteId: string }) => {
 
   return (
     <>
-      <span
-        onClick={() => handleDownload()}
-        className="flex gap-1 absolute rounded-md top-10 right-8 p-2 border hover:scale-105 border-zinc-800 transition-all cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
+      <div className=" absolute top-10 right-8  flex gap-2">
+        <span
+          className="px-3 py-2 flex flex-col items-center justify-center gap-0.5 rounded-md border hover:scale-105 border-zinc-800 transition-all cursor-pointer"
+          onClick={() => handlePDFDownload()}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15"
-          />
-        </svg>{" "}
-        PDF
-      </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+            />
+          </svg>{" "}
+          PDF
+        </span>
+
+        <span
+          className="px-3 py-2 flex flex-col items-center justify-center gap-0.5 rounded-md border hover:scale-105 border-zinc-800 transition-all cursor-pointer"
+          onClick={() => handleMarkdownDownload()}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+            />
+          </svg>{" "}
+          Markdown
+        </span>
+      </div>
 
       <div className="max-h-screen max-w-7xl mx-auto overflow-y-auto py-12">
         <div
